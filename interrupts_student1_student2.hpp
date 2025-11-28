@@ -2,7 +2,6 @@
  * @file interrupts.hpp
  * @author Sasisekhar Govind
  * @brief template main.cpp file for Assignment 3 Part 1 of SYSC4001
- * 
  */
 
 #ifndef INTERRUPTS_HPP_
@@ -28,8 +27,9 @@ enum states {
     TERMINATED,
     NOT_ASSIGNED
 };
-std::ostream& operator<<(std::ostream& os, const enum states& s) { //Overloading the << operator to make printing of the enum easier
 
+//Overloading the << operator to make printing of the enum easier
+std::ostream& operator<<(std::ostream& os, const enum states& s) { 
 	std::string state_names[] = {
                                 "NEW",
                                 "READY",

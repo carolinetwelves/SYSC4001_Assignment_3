@@ -1,8 +1,10 @@
 /**
  * @file interrupts.cpp
  * @author Sasisekhar Govind
+ * @author Jules Wong
+ * @author Caroline Twelves
  * @brief template main.cpp file for Assignment 3 Part 1 of SYSC4001
- * testing testing commits
+ * 
  */
 
 #include<interrupts_student1_student2.hpp>
