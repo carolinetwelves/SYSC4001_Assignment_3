@@ -66,11 +66,29 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
 
+        //if the I/O is requested
+        if (current_time - running.start_time > running.io_freq)
+        {
+            running.state = WAITING;
+            
+            wait_queue.push_back(running);
+            idle_CPU(running);
+
+            //run the next process if there is one
+            if(!ready_queue.empty())
+            {
+                run_process(running, job_list, ready_queue, current_time);
+            }
+        }
+        
+        //when processes are done waiting for I/O
         for (auto &process : wait_queue){
-
-            if (process.)
-
-            //if the process is completed, move to back of ready queue with code above
+            if (current_time - process.start_time > process.io_duration)
+            {
+                process.state = READY;
+                ready_queue.push_back(process); //Add the process to the ready queue
+                job_list.push_back(process); //Add the process to the list of processes
+            }
             //if process in cpu requests an I/O, move to wait queue
         }
 
@@ -84,6 +102,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
             run_process(running, job_list, ready_queue, current_time);
         }
 
+        //when process is completed
         else if (running.remaining_time <= 0){
             running.state = TERMINATED;
             terminate_process (running, job_list);
