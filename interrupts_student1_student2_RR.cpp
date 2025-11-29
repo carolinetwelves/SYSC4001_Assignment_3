@@ -66,6 +66,11 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
 
+        for (auto &process : wait_queue){
+            //if the process is completed, move to back of ready queue with code above
+            //if process in cpu requests an I/O, move to wait queue
+        }
+
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////SCHEDULER//////////////////////////////
