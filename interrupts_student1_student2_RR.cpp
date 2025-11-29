@@ -68,6 +68,8 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
 
         for (auto &process : wait_queue){
 
+            if (process.)
+
             //if the process is completed, move to back of ready queue with code above
             //if process in cpu requests an I/O, move to wait queue
         }
@@ -77,8 +79,26 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         //////////////////////////SCHEDULER//////////////////////////////
         FCFS(ready_queue); //example of FCFS is shown here
 
-        //if current proccess is over time swap out for next
-        if(running.PID != -1 && current_time - running.start_time > 100)
+        //if no process is running run the next one
+        if (running.PID == -1){
+            run_process(running, job_list, ready_queue, current_time);
+        }
+
+        else if (running.remaining_time <= 0){
+            running.state = TERMINATED;
+            terminate_process (running, job_list);
+
+            idle_CPU(running);
+
+            //run the next process if there is one
+            if(!ready_queue.empty())
+            {
+                run_process(running, job_list, ready_queue, current_time);
+            }
+        }
+
+        //if current running proccess is over time swap out for next
+        else if(current_time - running.start_time > 100)
         {
             //running goes back and new process runs
             running.state = READY;
@@ -90,11 +110,11 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
             {
                 run_process(running, job_list, ready_queue, current_time);
             }
-            
         }
         
         /////////////////////////////////////////////////////////////////
 
+        running.remaining_time--; //time runs out slowly
         current_time++; //increase current time by 1
     }
     
